@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=bd_material_manager
+      - POSTGRES_USER=ketrika
+      - POSTGRES_PASSWORD=Ketrika  27
+    volumes:
+      - /data/db:/var/lib/postgresql/data
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB=bd_material_manage_docker
+      - POSTGRES_USER=ketrika
+      - POSTGRES_PASSWORD=Ketrika  27
+    depends_on:
+      - db
