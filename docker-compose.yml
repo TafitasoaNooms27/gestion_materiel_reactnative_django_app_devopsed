@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=bd_material_manager
+      - POSTGRES_USER=ketrika
+      - POSTGRES_PASSWORD=Ketrika  27
+    volumes:
+      - /back_end_material_manager/data/db:/var/lib/postgresql/data
+  webback:
+    build: ./back_end_material_manager
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./back_end_material_manager/src:/back
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB=bd_material_manage_docker
+      - POSTGRES_USER=ketrika
+      - POSTGRES_PASSWORD=Ketrika  27
+    depends_on:
+      - db
+  client:
+    build: ./front_end_material_manager
+    restart: always
+    ports:
+      - "19006:19006"
+    depends_on:
+      - webback

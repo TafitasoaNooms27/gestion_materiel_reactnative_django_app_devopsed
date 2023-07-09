@@ -7,10 +7,10 @@ ENV PYTHONUNBUFFERED=1
 #ENV DJANGO_SETTINGS_MODULE=material_manager.settings.production
 
 #switch to /app directory so that everything runs from here
-WORKDIR /code
+WORKDIR /back
 
 #let pip install required packages
 RUN pip install --upgrade pip 
-COPY ./src/requirements.txt /code/ 
+COPY ./src/requirements.txt /back/ 
 RUN pip install -r requirements.txt
-#COPY ./src /code/
+COPY . /back/
